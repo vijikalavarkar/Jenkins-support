@@ -1,0 +1,16 @@
+# OWASP stage 
+
+stage('OWASP Dependency-Check') {
+    steps {
+        dependencyCheck additionalArguments: '--scan . --disableYarnAudit', odcInstallation: 'DC'
+        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+    }
+}
+
+
+# On Ubuntu/Debian
+
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+sudo apt install -y nodejs
+npm install --global yarn
+yarn --version
