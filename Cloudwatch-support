@@ -1,0 +1,14 @@
+Steps to apply:
+
+1. Save the JSON file:
+
+	sudo mkdir -p /opt/aws/amazon-cloudwatch-agent/etc/
+	sudo vi /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json
+
+
+2. Paste the JSON config above and save.
+
+3. Start CloudWatch Agent:
+
+	sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+	-a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
