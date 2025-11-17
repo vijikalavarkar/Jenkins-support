@@ -1,0 +1,48 @@
+OPTION 1 — Easiest & Recommended: Use MetalLB
+
+MetalLB provides LoadBalancer support for bare-metal/local clusters.
+
+Install MetalLB:
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.10/config/manifests/metallb-native.yaml
+
+Create an IP address pool:
+
+Pick an unused IP range from your LAN or VirtualBox network, e.g.:
+
+192.168.56.240 - 192.168.56.250
+
+
+Create the config:
+
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: default-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.56.240-192.168.56.250
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: default
+  namespace: metallb-system
+
+
+Apply it:
+
+kubectl apply -f metallb-config.yaml
+
+
+Then check:
+
+kubectl get svc -n ingress-nginx
+
+
+You will now see a valid EXTERNAL-IP:
+
+ingress-nginx-controller  LoadBalancer  192.168.56.240
+
+
+Your DNS can point to this IP.
