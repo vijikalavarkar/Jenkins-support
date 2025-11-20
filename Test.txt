@@ -20,3 +20,17 @@ yarn --version
 
 Nexus test skip
 sh "mvn -Dmaven.test.skip=true clean deploy"
+
+
+
+stage('Trivy FS scan') {
+    steps {
+        sh """
+            # TEXT report
+            trivy fs . --format table -o trivy-fs-scan-report.txt
+
+            # HTML report
+            trivy fs . --format template --template '@contrib/html.tpl' -o trivy-fs-scan-report.html
+        """
+    }
+}
