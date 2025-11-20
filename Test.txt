@@ -14,3 +14,9 @@ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt install -y nodejs
 npm install --global yarn
 yarn --version
+
+
+
+
+Nexus test skip
+sh "mvn -Dmaven.test.skip=true clean deploy"
