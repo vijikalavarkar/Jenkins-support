@@ -1,1 +1,39 @@
 kubectl patch svc jaeger-query -n tracing -p '{"spec":{"type":"LoadBalancer"}}'
+
+
+
+======================================
+
+✅ Solution: Delete & Recreate the Service
+1️⃣ Export the existing YAML
+kubectl get svc jaeger-query -n tracing -o yaml > jaeger-query.yaml
+
+2️⃣ Edit the file
+
+Open it:
+
+vi jaeger-query.yaml
+
+👉 Remove these lines completely:
+
+clusterIP: None
+clusterIPs:
+  - None
+
+
+👉 Then change:
+
+type: ClusterIP
+
+
+to:
+
+type: LoadBalancer
+
+3️⃣ Delete the old service
+kubectl delete svc jaeger-query -n tracing
+
+4️⃣ Apply the corrected YAML
+kubectl apply -f jaeger-query.yaml
+
+🎉 Now it will create a proper LoadBalancer service.
