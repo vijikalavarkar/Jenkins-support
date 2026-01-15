@@ -7,6 +7,21 @@ stage('OWASP Dependency-Check') {
     }
 }
 
+------ alertnate-----------------
+stage('OWASP Dependency-Check') {
+    steps {
+        dependencyCheck additionalArguments: '''
+            --scan ./ 
+            --format XML,HTML 
+            --out dependency-check-report
+        ''',
+        odcInstallation: 'DC'
+
+        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+    }
+}
+
+
 
 # On Ubuntu/Debian
 
