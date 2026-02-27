@@ -1,13 +1,12 @@
 # OWASP stage 
 
 stage('OWASP Dependency-Check') {
-    script {
+    steps {
+        script {
             def jdk17 = tool name: 'jdk17', type: 'jdk'
             env.JAVA_HOME = jdk17
             env.PATH = "${jdk17}/bin:${env.PATH}"
         }
-    
-    steps {
         dependencyCheck additionalArguments: '--scan . --disableYarnAudit', odcInstallation: 'DC'
         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
     }
